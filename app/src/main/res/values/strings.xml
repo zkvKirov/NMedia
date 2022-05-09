@@ -2,4 +2,7 @@
     <string name="app_name">NMedia</string>
     <string name="nmedia">NMedia!</string>
     <string name="avatar_description">Author avatar</string>
+    <string name="countOfLikes" translatable="false" >0</string>
+    <string name="countOfShare" translatable="false" >0</string>
+    <string name="countOfViews" translatable="false" >0</string>
 </resources>
