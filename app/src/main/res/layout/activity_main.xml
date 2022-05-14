@@ -1,142 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
     tools:context=".MainActivity">
 
-    <ImageView
-        android:id="@+id/avatar"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:contentDescription="@string/avatar_description"
-        android:scaleType="center"
-        android:src="@drawable/ic_launcher_foreground"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/post_card" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/authorName"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/common_spacing"
-        android:layout_marginEnd="@dimen/common_spacing"
-        android:ellipsize="marquee"
-        android:singleLine="true"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@id/datePublished"
-        app:layout_constraintEnd_toStartOf="@id/menu"
-        app:layout_constraintStart_toEndOf="@id/avatar"
-        app:layout_constraintTop_toTopOf="@id/avatar"
-        app:layout_constraintVertical_chainStyle="spread_inside"
-        tools:text="Фамилия Имя Отчество автора поста" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/datePublished"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/common_spacing"
-        android:layout_marginEnd="@dimen/common_spacing"
-        android:ellipsize="end"
-        android:singleLine="true"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@id/avatar"
-        app:layout_constraintEnd_toStartOf="@id/menu"
-        app:layout_constraintStart_toEndOf="@id/avatar"
-        app:layout_constraintTop_toBottomOf="@id/authorName"
-        tools:text="03.05.2022" />
-
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/menu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:src="@drawable/ic_more_vert_24"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.constraintlayout.widget.Barrier
-        android:id="@+id/barrier"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:barrierDirection="bottom"
-        app:constraint_referenced_ids="avatar, authorName, datePublished"/>
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/content"
-        app:layout_constraintTop_toBottomOf="@id/barrier"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="@dimen/common_spacing"
-        tools:text="просто какой-то текст чтобы заполнить это поле" />
-
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/like"
-        app:layout_constraintTop_toBottomOf="@id/content"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="@dimen/common_spacing"
-        android:background="@android:color/transparent"
-        android:src="@drawable/ic_favorite_border_24" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/countOfLikes"
-        android:text="@string/countOfLikes"
-        app:layout_constraintStart_toEndOf="@id/like"
-        app:layout_constraintTop_toTopOf="@id/like"
-        app:layout_constraintBottom_toBottomOf="@id/like"
-        android:layout_marginStart="@dimen/common_spacing"
-        tools:text="101" />
-
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/share"
-        app:layout_constraintTop_toBottomOf="@id/content"
-        app:layout_constraintStart_toEndOf="@id/like"
-        android:layout_marginStart="72dp"
-        android:layout_marginTop="@dimen/common_spacing"
-        android:background="@android:color/transparent"
-        android:src="@drawable/ic_baseline_share_24" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/countOfShare"
-        android:text="@string/countOfShare"
-        app:layout_constraintStart_toEndOf="@id/share"
-        app:layout_constraintTop_toTopOf="@id/share"
-        app:layout_constraintBottom_toBottomOf="@id/like"
-        android:layout_marginStart="@dimen/common_spacing"
-        tools:text="55" />
-
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/visibility"
-        app:layout_constraintTop_toBottomOf="@id/content"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginEnd="48dp"
-        android:layout_marginTop="@dimen/common_spacing"
-        android:background="@android:color/transparent"
-        android:src="@drawable/ic_visibility_24" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/countOfViews"
-        android:text="@string/countOfViews"
-        app:layout_constraintStart_toEndOf="@id/visibility"
-        app:layout_constraintTop_toTopOf="@id/visibility"
-        app:layout_constraintBottom_toBottomOf="@id/visibility"
-        android:layout_marginStart="@dimen/common_spacing"
-        tools:text="77" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>
