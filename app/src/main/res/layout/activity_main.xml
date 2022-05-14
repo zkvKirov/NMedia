@@ -72,7 +72,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="@dimen/common_spacing"
-        tools:text="просто какой-о текст чтобы заполнить это поле" />
+        tools:text="просто какой-то текст чтобы заполнить это поле" />
 
     <androidx.appcompat.widget.AppCompatImageButton
         android:layout_width="wrap_content"

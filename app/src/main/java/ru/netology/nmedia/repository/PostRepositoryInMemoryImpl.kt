@@ -21,12 +21,10 @@ class PostRepositoryInMemoryImpl : PostRepository {
 
     override fun like() {
         post = post.copy(likedByMe = !post.likedByMe)
-        if (post.likedByMe) R.drawable.ic_favorite_24 else R.drawable.ic_favorite_border_24
-        if (post.likedByMe){
-            post = post.copy(likes = post.likes + 1)
-        }  else {
-            post = post.copy(likes = post.likes - 1)
-        }
+        post = if (post.likedByMe)
+            post.copy(likes = post.likes + 1)
+        else
+            post.copy(likes = post.likes - 1)
         data.value = post
     }
 
@@ -34,6 +32,4 @@ class PostRepositoryInMemoryImpl : PostRepository {
         post = post.copy(share = post.share + 1)
         data.value = post
     }
-
-
 }
