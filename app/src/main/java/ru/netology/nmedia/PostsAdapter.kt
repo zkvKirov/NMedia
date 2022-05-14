@@ -2,6 +2,8 @@ package ru.netology.nmedia
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import ru.netology.nmedia.databinding.PostCardBinding
 import kotlin.math.round
@@ -10,49 +12,50 @@ typealias OnLikeListener = (post: Post) -> Unit
 typealias OnShareListener = (post: Post) -> Unit
 
 class PostsAdapter(
-    //private val onLikeListener: OnLikeListener
-    private val onShareListener: OnShareListener
-) : RecyclerView.Adapter<PostViewHolder>() {
-        var list = emptyList<Post>()
-            set(value) {
-                field = value
-                notifyDataSetChanged()
-            }
+    private val onLikeListener: OnLikeListener,
+    //private val onShareListener: OnShareListener
+) : ListAdapter<Post, PostViewHolder>(PostDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = PostCardBinding.inflate(inflater, parent, false)
-        return PostViewHolder(binding, onShareListener)
+        return PostViewHolder(binding, onLikeListener) // добваить onShareListener, если код расскомментировать
     }
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
-        holder.bind(list[position])
+        holder.bind(getItem(position))
     }
 
-    override fun getItemCount(): Int = list.size
+    private object PostDiffCallback : DiffUtil.ItemCallback<Post>() {
+        override fun areItemsTheSame(oldItem: Post, newItem: Post) =
+            oldItem.id == newItem.id
+
+        override fun areContentsTheSame(oldItem: Post, newItem: Post) =
+            oldItem == newItem
+    }
 }
 
 class PostViewHolder(
     private val binding: PostCardBinding,
-    //private val onLikeListener: OnLikeListener
-    private val onShareListener: OnShareListener
+    private val onLikeListener: OnLikeListener,
+    //private val onShareListener: OnShareListener
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(post: Post) {
         binding.apply {
             authorName.text = post.author
             datePublished.text = post.published
             content.text = post.content
-            //countOfLikes.text = displayLikes(post.likes)
+            countOfLikes.text = displayLikes(post.likes)
             countOfShare.text = post.share.toString()
             like.setImageResource(
                 if (post.likedByMe) R.drawable.ic_favorite_24 else R.drawable.ic_favorite_border_24
             )
-//            like.setOnClickListener {
-//                onLikeListener(post)
-//            }
-            share.setOnClickListener {
-                onShareListener(post)
+            like.setOnClickListener {
+                onLikeListener(post)
             }
+//            share.setOnClickListener {
+//                onShareListener(post)
+//            }
         }
     }
 

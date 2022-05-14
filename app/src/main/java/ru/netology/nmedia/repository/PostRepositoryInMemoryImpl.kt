@@ -11,7 +11,10 @@ class PostRepositoryInMemoryImpl : PostRepository {
             id = index + 1L,
             author = "ZKV",
             content = "Some random content $index",
-            published = "14.05.2022"
+            published = "14.05.2022",
+//            likes = 0,
+//            likedByMe = false,
+//            share = 0
         )
     }
 

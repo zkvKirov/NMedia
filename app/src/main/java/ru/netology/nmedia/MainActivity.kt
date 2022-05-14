@@ -16,13 +16,13 @@ class MainActivity : AppCompatActivity() {
 
         val viewModel: PostViewModel by viewModels()
         val adapter = PostsAdapter {
-            //viewModel.onLikeClicked(it.id)
-            viewModel.onShareClicked(it.id)
+            viewModel.onLikeClicked(it.id)
+            //viewModel.onShareClicked(it.id)
         }
 
         binding.list.adapter = adapter
         viewModel.data.observe(this) { posts ->
-            adapter.list = posts
+            adapter.submitList(posts)
         }
 
     }
