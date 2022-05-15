@@ -15,10 +15,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val viewModel: PostViewModel by viewModels()
-        val adapter = PostsAdapter {
-            viewModel.onLikeClicked(it.id)
-            //viewModel.onShareClicked(it.id)
-        }
+        val adapter = PostsAdapter(
+            {viewModel.onLikeClicked(it.id)},
+            {viewModel.onShareClicked(it.id)}
+        )
 
         binding.list.adapter = adapter
         viewModel.data.observe(this) { posts ->

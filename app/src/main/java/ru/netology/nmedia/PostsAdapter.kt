@@ -13,13 +13,13 @@ typealias OnShareListener = (post: Post) -> Unit
 
 class PostsAdapter(
     private val onLikeListener: OnLikeListener,
-    //private val onShareListener: OnShareListener
+    private val onShareListener: OnShareListener
 ) : ListAdapter<Post, PostViewHolder>(PostDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = PostCardBinding.inflate(inflater, parent, false)
-        return PostViewHolder(binding, onLikeListener) // добваить onShareListener, если код расскомментировать
+        return PostViewHolder(binding, onLikeListener,onShareListener)
     }
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
@@ -38,7 +38,7 @@ class PostsAdapter(
 class PostViewHolder(
     private val binding: PostCardBinding,
     private val onLikeListener: OnLikeListener,
-    //private val onShareListener: OnShareListener
+    private val onShareListener: OnShareListener
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(post: Post) {
         binding.apply {
@@ -53,9 +53,9 @@ class PostViewHolder(
             like.setOnClickListener {
                 onLikeListener(post)
             }
-//            share.setOnClickListener {
-//                onShareListener(post)
-//            }
+            share.setOnClickListener {
+                onShareListener(post)
+            }
         }
     }
 

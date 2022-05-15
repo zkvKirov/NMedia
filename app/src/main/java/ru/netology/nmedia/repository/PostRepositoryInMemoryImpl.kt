@@ -11,10 +11,7 @@ class PostRepositoryInMemoryImpl : PostRepository {
             id = index + 1L,
             author = "ZKV",
             content = "Some random content $index",
-            published = "14.05.2022",
-//            likes = 0,
-//            likedByMe = false,
-//            share = 0
+            published = "14.05.2022"
         )
     }
 
@@ -27,17 +24,22 @@ class PostRepositoryInMemoryImpl : PostRepository {
             if (it.id != postId) it else it.copy(likedByMe = !it.likedByMe)
         }
         posts = posts.map {
-            if (it.likedByMe)
-                it.copy(likes = it.likes + 1)
-            else
-                it.copy(likes = it.likes - 1)
+            if (it.id != postId) {
+                it
+            } else {
+                if (it.likedByMe)
+                    it.copy(likes = it.likes + 1)
+                else
+                    it.copy(likes = it.likes - 1)
+            }
+
         }
         data.value = posts
     }
 
     override fun share(postId: Long) {
         data.value = posts.map {
-            it.copy(share = it.share + 1)
+            if (it.id != postId) it else it.copy(share = it.share + 1)
         }
     }
 }
