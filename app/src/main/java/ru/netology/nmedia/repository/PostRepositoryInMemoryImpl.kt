@@ -6,7 +6,7 @@ import ru.netology.nmedia.Post
 
 class PostRepositoryInMemoryImpl : PostRepository {
 
-    private var posts = List(10) { index ->
+    private var posts = List(100) { index ->
         Post(
             id = index + 1L,
             author = "ZKV",
@@ -32,14 +32,14 @@ class PostRepositoryInMemoryImpl : PostRepository {
                 else
                     it.copy(likes = it.likes - 1)
             }
-
         }
         data.value = posts
     }
 
     override fun share(postId: Long) {
-        data.value = posts.map {
+        posts = posts.map {
             if (it.id != postId) it else it.copy(share = it.share + 1)
         }
+        data.value = posts
     }
 }
