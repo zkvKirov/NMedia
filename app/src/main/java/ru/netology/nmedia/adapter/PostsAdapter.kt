@@ -2,24 +2,22 @@ package ru.netology.nmedia
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import ru.netology.nmedia.adapter.PostInteractionListener
 import ru.netology.nmedia.databinding.PostCardBinding
 import kotlin.math.round
 
-typealias OnLikeListener = (post: Post) -> Unit
-typealias OnShareListener = (post: Post) -> Unit
-
 class PostsAdapter(
-    private val onLikeListener: OnLikeListener,
-    private val onShareListener: OnShareListener
+    private val interactionListener: PostInteractionListener
 ) : ListAdapter<Post, PostViewHolder>(PostDiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = PostCardBinding.inflate(inflater, parent, false)
-        return PostViewHolder(binding, onLikeListener,onShareListener)
+        return PostViewHolder(binding, interactionListener)
     }
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
@@ -37,11 +35,43 @@ class PostsAdapter(
 
 class PostViewHolder(
     private val binding: PostCardBinding,
-    private val onLikeListener: OnLikeListener,
-    private val onShareListener: OnShareListener
+    listener: PostInteractionListener
 ) : RecyclerView.ViewHolder(binding.root) {
+
+    private lateinit var post: Post
+
+    private val popupMenu by lazy {
+        PopupMenu(itemView.context, binding.menu).apply {
+            inflate(R.menu.option_post)
+            setOnMenuItemClickListener { menuItem ->
+                when (menuItem.itemId) {
+                    R.id.remove -> {
+                        listener.onRemoveClicked(post)
+                        true
+                    }
+                    R.id.edit -> {
+                        listener.onEditClicked(post)
+                        true
+                    }
+                    else -> false
+                }
+            }
+        }
+    }
+
+    init {
+        binding.like.setOnClickListener {
+            listener.onLikeClicked(post)
+        }
+        binding.share.setOnClickListener {
+            listener.onShareClicked(post)
+        }
+    }
+
     fun bind(post: Post) {
-        binding.apply {
+        this.post = post
+
+        with(binding) {
             authorName.text = post.author
             datePublished.text = post.published
             content.text = post.content
@@ -50,40 +80,7 @@ class PostViewHolder(
             like.setImageResource(
                 if (post.likedByMe) R.drawable.ic_favorite_24 else R.drawable.ic_favorite_border_24
             )
-            like.setOnClickListener {
-                onLikeListener(post)
-            }
-            share.setOnClickListener {
-                onShareListener(post)
-            }
+            menu.setOnClickListener {popupMenu.show()}
         }
-    }
-
-    private fun displayLikes(like: Int): String {
-        val likes: Any
-        val result: String = when (like) {
-            in 0..999 -> "$like"
-            in 1000..1099 -> {
-                likes = like / 1000
-                "$likes" + "K"
-            }
-            in 1100..9999 -> {
-                likes = round((like / 1000.toDouble()) * 10.0) / 10.0
-                "$likes" + "K"
-            }
-            in 10000..999999 -> {
-                likes = like / 1000
-                "$likes" + "K"
-            }
-            in 1000000..1099999 -> {
-                likes = like / 1000000
-                "$likes" + "M"
-            }
-            else -> {
-                likes = round((like / 1000000.toDouble()) * 10.0) / 10.0
-                "$likes" + "M"
-            }
-        }
-        return result
     }
 }

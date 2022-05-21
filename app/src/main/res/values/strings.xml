@@ -5,4 +5,8 @@
     <string name="countOfLikes" translatable="false" >0</string>
     <string name="countOfShare" translatable="false" >0</string>
     <string name="countOfViews" translatable="false" >0</string>
+    <string name="remove">Remove</string>
+    <string name="edit">Edit</string>
+    <string name="post_text">Post text</string>
+    <string name="post_save">Post save</string>
 </resources>
