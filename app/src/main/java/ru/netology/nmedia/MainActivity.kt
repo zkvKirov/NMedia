@@ -3,6 +3,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
 import ru.netology.nmedia.databinding.ActivityMainBinding
+import ru.netology.nmedia.util.AndroidUtils
+import ru.netology.nmedia.util.AndroidUtils.showHide
 import ru.netology.nmedia.viewModel.PostViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -29,6 +31,15 @@ class MainActivity : AppCompatActivity() {
                 clearFocus()
             }
             binding.list.scrollToPosition(0) // возвращает на последний пост списка, а не на вновь созданный!?
+        }
+
+        binding.cancelButton.setOnClickListener {
+            with(binding.contentEditText) {
+                setText("")
+                AndroidUtils.hideKeyboard(this)
+                clearFocus()
+            }
+            showHide(it)
         }
 
         viewModel.currentPost.observe(this) { currentPost ->

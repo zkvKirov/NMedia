@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import ru.netology.nmedia.adapter.PostInteractionListener
 import ru.netology.nmedia.databinding.PostCardBinding
-import kotlin.math.round
+import ru.netology.nmedia.util.displayLikes
 
 class PostsAdapter(
     private val interactionListener: PostInteractionListener

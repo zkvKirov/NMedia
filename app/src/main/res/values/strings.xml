@@ -9,4 +9,5 @@
     <string name="edit">Edit</string>
     <string name="post_text">Post text</string>
     <string name="post_save">Post save</string>
+    <string name="cancel">Cancel</string>
 </resources>

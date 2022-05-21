@@ -7,4 +7,5 @@
     <string name="edit">Редактировать</string>
     <string name="post_text">Текст поста</string>
     <string name="post_save">Сохранить</string>
+    <string name="cancel">Отмена</string>
 </resources>

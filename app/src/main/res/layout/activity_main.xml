@@ -22,6 +22,13 @@
         app:barrierDirection="top"
         app:constraint_referenced_ids="contentEditText" />
 
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        app:constraint_referenced_ids="contentEditText, saveButton, cancelButton" />
+
     <EditText
         android:id="@+id/contentEditText"
         android:layout_width="0dp"
@@ -46,5 +53,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/contentEditText"
         app:srcCompat="@drawable/ic_save_48" />
+
+    <ImageButton
+        android:id="@+id/cancelButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/cancel"
+        app:layout_constraintBottom_toTopOf="@id/toolsTopBarrier"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_clear_24" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

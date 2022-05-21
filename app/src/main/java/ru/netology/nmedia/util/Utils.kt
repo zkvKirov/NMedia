@@ -1,11 +1,10 @@
-package ru.netology.nmedia
+package ru.netology.nmedia.util
 
 import android.content.Context
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import kotlin.math.round
 
-// код из презентации
 object AndroidUtils {
     fun hideKeyboard(view: View) {
         val imm = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -16,13 +15,15 @@ object AndroidUtils {
         val imm = view.context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.showSoftInput(view, /* flags = */0)
     }
-}
 
-// код из вебинара
-//internal fun View.hideKeyboard(view: View) {
-//    val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-//    imm.hideSoftInputFromWindow(windowToken, /* flags = */0)
-//}
+    fun showHide(view:View) {
+        view.visibility = if (view.visibility == View.VISIBLE){
+            View.INVISIBLE
+        } else{
+            View.VISIBLE
+        }
+    }
+}
 
 internal fun displayLikes(like: Int): String {
     val likes: Any
