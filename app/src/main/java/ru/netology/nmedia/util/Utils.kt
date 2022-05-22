@@ -16,13 +16,6 @@ object AndroidUtils {
         imm.showSoftInput(view, /* flags = */0)
     }
 
-    fun showHide(view:View) {
-        view.visibility = if (view.visibility == View.VISIBLE){
-            View.INVISIBLE
-        } else{
-            View.VISIBLE
-        }
-    }
 }
 
 internal fun displayLikes(like: Int): String {

@@ -1,4 +1,4 @@
-package ru.netology.nmedia
+package ru.netology.nmedia.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,7 +6,8 @@ import android.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import ru.netology.nmedia.adapter.PostInteractionListener
+import ru.netology.nmedia.Post
+import ru.netology.nmedia.R
 import ru.netology.nmedia.databinding.PostCardBinding
 import ru.netology.nmedia.util.displayLikes
 

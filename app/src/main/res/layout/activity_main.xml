@@ -22,13 +22,6 @@
         app:barrierDirection="top"
         app:constraint_referenced_ids="contentEditText" />
 
-    <androidx.constraintlayout.widget.Group
-        android:id="@+id/group"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="visible"
-        app:constraint_referenced_ids="contentEditText, saveButton, cancelButton" />
-
     <EditText
         android:id="@+id/contentEditText"
         android:layout_width="0dp"
@@ -38,6 +31,7 @@
         android:importantForAutofill="no"
         android:inputType="textMultiLine"
         android:padding="@dimen/common_spacing"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/saveButton"
         app:layout_constraintStart_toStartOf="parent"
@@ -54,14 +48,59 @@
         app:layout_constraintStart_toEndOf="@id/contentEditText"
         app:srcCompat="@drawable/ic_save_48" />
 
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:constraint_referenced_ids="simbolEdit, editMessage, editMessageText, cancelButton" />
+
+    <ImageView
+        android:id="@+id/simbolEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:background="@color/white"
+        android:contentDescription="@string/avatar_description"
+        android:src="@drawable/ic_mode_edit_24"
+        app:layout_constraintBottom_toTopOf="@id/toolsTopBarrier"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/editMessage" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/editMessage"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:singleLine="true"
+        android:text="@string/edit_message"
+        android:textColor="#0D5CD5"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@id/editMessageText"
+        app:layout_constraintEnd_toStartOf="@id/cancelButton"
+        app:layout_constraintStart_toEndOf="@id/simbolEdit"
+        app:layout_constraintVertical_chainStyle="spread_inside" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/editMessageText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:singleLine="false"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/toolsTopBarrier"
+        app:layout_constraintEnd_toStartOf="@id/cancelButton"
+        app:layout_constraintStart_toEndOf="@id/simbolEdit"
+        tools:text="текст поста для редактирования на несколько строчек наверное" />
+
     <ImageButton
         android:id="@+id/cancelButton"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
+        android:layout_height="0dp"
+        android:background="@color/white"
         android:contentDescription="@string/cancel"
         app:layout_constraintBottom_toTopOf="@id/toolsTopBarrier"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/editMessage"
         app:srcCompat="@drawable/ic_clear_24" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
