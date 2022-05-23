@@ -67,11 +67,13 @@ class PostViewHolder(
         binding.share.setOnClickListener {
             listener.onShareClicked(post)
         }
+        binding.menu.setOnClickListener {
+            popupMenu.show()
+        }
     }
 
     fun bind(post: Post) {
         this.post = post
-
         with(binding) {
             authorName.text = post.author
             datePublished.text = post.published
@@ -81,7 +83,6 @@ class PostViewHolder(
             like.setImageResource(
                 if (post.likedByMe) R.drawable.ic_favorite_24 else R.drawable.ic_favorite_border_24
             )
-            menu.setOnClickListener {popupMenu.show()}
         }
     }
 }

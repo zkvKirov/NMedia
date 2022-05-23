@@ -22,7 +22,13 @@ class MainActivity : AppCompatActivity() {
 
         binding.list.adapter = adapter
         viewModel.data.observe(this) { posts ->
-            adapter.submitList(posts)
+            val newPost = posts.size > adapter.itemCount
+            adapter.submitList(posts) {
+                if (newPost) {
+                    binding.list.smoothScrollToPosition(0)
+                }
+            }
+            binding.group.visibility = View.INVISIBLE
         }
 
         binding.saveButton.setOnClickListener {
@@ -33,7 +39,6 @@ class MainActivity : AppCompatActivity() {
                 AndroidUtils.hideKeyboard(this)
                 clearFocus()
             }
-            binding.list.scrollToPosition(0) // возвращает на последний пост списка, а не на вновь созданный!?
         }
 
         binding.cancelButton.setOnClickListener {
@@ -50,10 +55,10 @@ class MainActivity : AppCompatActivity() {
                 val content = currentPost?.content
                 setText(content)
                 if (content != null) {
-                    AndroidUtils.showKeyboard(this)
                     requestFocus(0)
                     binding.group.visibility = View.VISIBLE
                     binding.editMessageText.text = content
+                    AndroidUtils.showKeyboard(this)
                 }
             }
         }
