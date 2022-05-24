@@ -2,6 +2,7 @@ package ru.netology.nmedia
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import ru.netology.nmedia.adapter.PostsAdapter
 import ru.netology.nmedia.databinding.ActivityMainBinding
@@ -20,6 +21,8 @@ class MainActivity : AppCompatActivity() {
         val viewModel: PostViewModel by viewModels()
         val adapter = PostsAdapter(viewModel)
 
+        binding.group.visibility = View.INVISIBLE
+
         binding.list.adapter = adapter
         viewModel.data.observe(this) { posts ->
             val newPost = posts.size > adapter.itemCount
@@ -28,7 +31,6 @@ class MainActivity : AppCompatActivity() {
                     binding.list.smoothScrollToPosition(0)
                 }
             }
-            binding.group.visibility = View.INVISIBLE
         }
 
         binding.saveButton.setOnClickListener {
@@ -46,8 +48,11 @@ class MainActivity : AppCompatActivity() {
                 setText("")
                 AndroidUtils.hideKeyboard(this)
                 clearFocus()
+                viewModel.currentPost.value = null
             }
             binding.group.visibility = View.INVISIBLE
+            val toast: Toast = Toast.makeText(this, "Editing cancel", Toast.LENGTH_SHORT)
+            toast.show()
         }
 
         viewModel.currentPost.observe(this) { currentPost ->
