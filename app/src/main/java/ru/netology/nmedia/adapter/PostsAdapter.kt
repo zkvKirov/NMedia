@@ -78,11 +78,14 @@ class PostViewHolder(
             authorName.text = post.author
             datePublished.text = post.published
             content.text = post.content
-            countOfLikes.text = displayLikes(post.likes)
-            countOfShare.text = post.share.toString()
-            like.setImageResource(
-                if (post.likedByMe) R.drawable.ic_favorite_24 else R.drawable.ic_favorite_border_24
-            )
+            like.apply {
+                text = displayLikes(post.likes)
+                isChecked = post.likedByMe
+            }
+            share.text = post.share.toString()
+//            like.setButtonDrawable(
+//                if (post.likedByMe) R.drawable.ic_favorite_24 else R.drawable.ic_favorite_border_24
+//            )
         }
     }
 }
