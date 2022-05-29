@@ -73,69 +73,49 @@
         app:layout_constraintTop_toBottomOf="@id/barrier"
         tools:text="просто какой-то текст чтобы заполнить это поле" />
 
-    <androidx.appcompat.widget.AppCompatImageButton
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/footer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="content" />
+
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/like"
+        style="@style/LikeButtonColor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/common_spacing"
-        android:background="@android:color/transparent"
-        android:src="@drawable/ic_favorite_border_24"
+        android:checkable="true"
+        android:contentDescription="@string/like"
+        android:textColor="?attr/colorControlNormal"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/content" />
+        app:layout_constraintTop_toBottomOf="@id/footer"
+        tools:text="1001" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/countOfLikes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/common_spacing"
-        android:text="@string/countOfLikes"
-        app:layout_constraintBottom_toBottomOf="@id/like"
-        app:layout_constraintStart_toEndOf="@id/like"
-        app:layout_constraintTop_toTopOf="@id/like"
-        tools:text="101" />
-
-    <androidx.appcompat.widget.AppCompatImageButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/share"
+        style="@style/ButtonColor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:contentDescription="@string/share"
         android:layout_marginStart="72dp"
-        android:layout_marginTop="@dimen/common_spacing"
-        android:background="@android:color/transparent"
-        android:src="@drawable/ic_baseline_share_24"
-        app:layout_constraintStart_toEndOf="@id/like"
-        app:layout_constraintTop_toBottomOf="@id/content" />
+        android:textColor="?attr/colorControlNormal"
+        app:icon="@drawable/ic_share"
+        app:layout_constraintStart_toStartOf="@id/like"
+        app:layout_constraintTop_toBottomOf="@id/footer"
+        tools:text="10" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/countOfShare"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/common_spacing"
-        android:text="@string/countOfShare"
-        app:layout_constraintBottom_toBottomOf="@id/like"
-        app:layout_constraintStart_toEndOf="@id/share"
-        app:layout_constraintTop_toTopOf="@id/share"
-        tools:text="55" />
-
-    <androidx.appcompat.widget.AppCompatImageButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/visibility"
+        style="@style/ButtonColor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/common_spacing"
-        android:layout_marginEnd="48dp"
-        android:background="@android:color/transparent"
-        android:src="@drawable/ic_visibility_24"
+        android:layout_marginEnd="16dp"
+        android:contentDescription="@string/visibility"
+        android:textColor="?attr/colorControlNormal"
+        app:icon="@drawable/ic_visibility_24"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/content" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/countOfViews"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/common_spacing"
-        android:text="@string/countOfViews"
-        app:layout_constraintBottom_toBottomOf="@id/visibility"
-        app:layout_constraintStart_toEndOf="@id/visibility"
-        app:layout_constraintTop_toTopOf="@id/visibility"
+        app:layout_constraintTop_toBottomOf="@id/footer"
         tools:text="77" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
