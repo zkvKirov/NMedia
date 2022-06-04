@@ -97,7 +97,7 @@
         style="@style/ButtonColor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/share"
+        android:contentDescription="@string/share_post"
         android:layout_marginStart="72dp"
         android:textColor="?attr/colorControlNormal"
         app:icon="@drawable/ic_share"

@@ -10,6 +10,7 @@
     <string name="cancel">Отмена</string>
     <string name="edit_message">Редактировать сообщение</string>
     <string name="like">Нравится</string>
-    <string name="share">Поделиться</string>
+    <string name="share_post">Поделиться</string>
     <string name="visibility">Просмотры</string>
+    <string name="add_post">Добавить пост</string>
 </resources>

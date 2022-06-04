@@ -12,6 +12,7 @@
     <string name="cancel">Cancel</string>
     <string name="edit_message">Edit Message</string>
     <string name="like">Like</string>
-    <string name="share">Share</string>
+    <string name="share_post">Share Post</string>
     <string name="visibility">Visibility</string>
+    <string name="add_post">Add Post</string>
 </resources>
