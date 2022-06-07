@@ -18,7 +18,7 @@ class PostContentActivity : AppCompatActivity() {
         val binding = PostContentActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //binding.edit.setText("Как сюда передать редактируемый пост?")
+        binding.edit.setText(intent?.getStringExtra(RESULT_KEY))
         binding.edit.requestFocus(0)
         binding.ok.setOnClickListener {
             val intent = Intent()
