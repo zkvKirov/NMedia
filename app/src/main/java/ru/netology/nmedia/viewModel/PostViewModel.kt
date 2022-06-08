@@ -2,6 +2,7 @@ package ru.netology.nmedia.viewModel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import ru.netology.nmedia.EditPostResult
 import ru.netology.nmedia.Post
 import ru.netology.nmedia.adapter.PostInteractionListener
 import ru.netology.nmedia.repository.PostRepository
@@ -15,7 +16,7 @@ class PostViewModel : ViewModel(), PostInteractionListener {
     val data = repository.getAll()
 
     val sharePostContent = SingleLiveEvent<String>()
-    val navigateToPostContentScreenEvent = SingleLiveEvent<String?>()
+    val navigateToPostContentScreenEvent = SingleLiveEvent<EditPostResult?>()
     val playVideo = SingleLiveEvent<String>()
     private val currentPost = MutableLiveData<Post?> (null)
 
@@ -28,7 +29,7 @@ class PostViewModel : ViewModel(), PostInteractionListener {
             author = "I",
             content = content,
             published = "Today",
-            video = "https://www.youtube.com/watch?v=uYmzLRXjcAE&list=PL0lO_mIqDDFW13-lP3IgK9lZoM1M-oPl4&index=18"
+            //video = "https://www.youtube.com/watch?v=uYmzLRXjcAE&list=PL0lO_mIqDDFW13-lP3IgK9lZoM1M-oPl4&index=18"
         )
         repository.save(newPost)
     }
@@ -49,7 +50,7 @@ class PostViewModel : ViewModel(), PostInteractionListener {
     override fun onRemoveClicked(post: Post) = repository.remove(post.id)
 
     override fun onEditClicked(post: Post) {
-        navigateToPostContentScreenEvent.value = post.content
+        navigateToPostContentScreenEvent.value = EditPostResult(post.content, post.video)
         currentPost.value = post
     }
 

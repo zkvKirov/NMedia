@@ -13,4 +13,6 @@
     <string name="share_post">Поделиться</string>
     <string name="visibility">Просмотры</string>
     <string name="add_post">Добавить пост</string>
+    <string name="url">поле для ввода url</string>
+    <string name="text">поле для ввода текста</string>
 </resources>
