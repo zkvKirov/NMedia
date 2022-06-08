@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NMedia">
+
         <activity
             android:name=".activity.MainActivity"
             android:exported="true">
@@ -26,6 +27,7 @@
                 <action android:name="android.intent.action.SEND" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:mimeType="text/plain" />
+                <data android:mimeType="audio/video" />
             </intent-filter>
         </activity>
 
@@ -33,5 +35,12 @@
             android:exported="false"/>
 
     </application>
+
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.VIEW" />
+            <data android:scheme="*" />
+        </intent>
+    </queries>
 
 </manifest>

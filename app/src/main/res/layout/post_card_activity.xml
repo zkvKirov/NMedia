@@ -73,12 +73,40 @@
         app:layout_constraintTop_toBottomOf="@id/barrier"
         tools:text="просто какой-то текст чтобы заполнить это поле" />
 
+    <VideoView
+        android:id="@+id/video_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/common_spacing"
+        app:layout_constraintBottom_toTopOf="@+id/footer"
+        app:layout_constraintDimensionRatio="H,16:9"
+        app:layout_constraintTop_toBottomOf="@+id/content" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/play_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_play_circle_24"
+        app:layout_constraintBottom_toBottomOf="@+id/video_content"
+        app:layout_constraintEnd_toEndOf="@+id/video_content"
+        app:layout_constraintStart_toStartOf="@+id/video_content"
+        app:layout_constraintTop_toTopOf="@+id/video_content" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group_video"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="video_content, play_button"
+        tools:visibility="visible" />
+
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/footer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="bottom"
-        app:constraint_referenced_ids="content" />
+        app:constraint_referenced_ids="video_content" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/like"
@@ -97,8 +125,8 @@
         style="@style/ButtonColor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/share_post"
         android:layout_marginStart="72dp"
+        android:contentDescription="@string/share_post"
         android:textColor="?attr/colorControlNormal"
         app:icon="@drawable/ic_share"
         app:layout_constraintStart_toStartOf="@id/like"

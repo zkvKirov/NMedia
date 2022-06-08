@@ -16,6 +16,7 @@ class PostViewModel : ViewModel(), PostInteractionListener {
 
     val sharePostContent = SingleLiveEvent<String>()
     val navigateToPostContentScreenEvent = SingleLiveEvent<String?>()
+    val playVideo = SingleLiveEvent<String>()
     private val currentPost = MutableLiveData<Post?> (null)
 
     fun onSaveButtonClicked(content: String) {
@@ -26,7 +27,8 @@ class PostViewModel : ViewModel(), PostInteractionListener {
             id = PostRepository.NEW_POST_ID,
             author = "I",
             content = content,
-            published = "Today"
+            published = "Today",
+            video = "https://www.youtube.com/watch?v=uYmzLRXjcAE&list=PL0lO_mIqDDFW13-lP3IgK9lZoM1M-oPl4&index=18"
         )
         repository.save(newPost)
     }
@@ -49,6 +51,13 @@ class PostViewModel : ViewModel(), PostInteractionListener {
     override fun onEditClicked(post: Post) {
         navigateToPostContentScreenEvent.value = post.content
         currentPost.value = post
+    }
+
+    override fun onPlayVideoClicked(post: Post) {
+        val url: String = requireNotNull(post.video) {
+            "URL is absent"
+        }
+        playVideo.value = url
     }
 
     // endregion PostInteractionListener
