@@ -4,14 +4,13 @@ import android.os.Parcel
 import android.os.Parcelable
 
 class EditPostResult(
-    private val newContent: String?,
-    private val newVideoUrl: String?
+    val newContent: String?,
+    val newVideoUrl: String?
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString(),
         parcel.readString()
-    ) {
-    }
+    )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(newContent)

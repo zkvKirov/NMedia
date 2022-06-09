@@ -19,18 +19,16 @@ class PostContentActivity : AppCompatActivity() {
         val binding = PostContentActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.editContent.setText(intent?.getStringExtra("NewContent"))
+        binding.editContent.setText(intent?.getStringExtra("newContent"))
         binding.editUrl.setText(intent?.getStringExtra("newVideoUrl"))
         binding.editContent.requestFocus(0)
         binding.ok.setOnClickListener {
             val intent = Intent()
-            val text = binding.editContent.text
-            if (text.isNullOrBlank()) {
+            if (binding.editContent.text.isNullOrBlank()) {
                 setResult(Activity.RESULT_CANCELED, intent)
             } else {
-                val content = text.toString()
                 intent.apply {
-                    putExtra("NewContent", content)
+                    putExtra("newContent", binding.editContent.text.toString())
                     putExtra("newVideoUrl", binding.editUrl.text.toString())
                 }
                 setResult(Activity.RESULT_OK, intent)
@@ -45,8 +43,10 @@ class PostContentActivity : AppCompatActivity() {
         override fun createIntent(context: Context, input: EditPostResult?): Intent {
             val intent = Intent(context, PostContentActivity::class.java)
             intent.apply {
-                putExtra("NewContent", input)
-                putExtra("newVideoUrl", input)
+                if (input != null) {
+                    putExtra("newContent", input.newContent)
+                    putExtra("newVideoUrl", input.newVideoUrl)
+                }
             }
             return intent
         }
@@ -54,7 +54,7 @@ class PostContentActivity : AppCompatActivity() {
         override fun parseResult(resultCode: Int, intent: Intent?): EditPostResult? = when {
             resultCode != Activity.RESULT_OK -> null
             else -> EditPostResult(
-                newContent = intent?.getStringExtra("NewContent"),
+                newContent = intent?.getStringExtra("newContent"),
                 newVideoUrl = intent?.getStringExtra("newVideoUrl")
             )
         }

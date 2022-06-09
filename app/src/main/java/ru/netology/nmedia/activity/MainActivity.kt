@@ -56,10 +56,11 @@ class MainActivity : AppCompatActivity() {
             PostContentActivity.ResultContract
         ) {
             it?: return@registerForActivityResult
-            viewModel.onSaveButtonClicked(EditPostResult())
+            viewModel.onSaveButtonClicked(it)
         }
+
         viewModel.navigateToPostContentScreenEvent.observe(this) {
-            postContentActivityLauncher.launch(EditPostResult())
+            postContentActivityLauncher.launch(it)
         }
     }
 }

@@ -15,23 +15,26 @@ class PostViewModel : ViewModel(), PostInteractionListener {
 
     val data = repository.getAll()
 
-    val sharePostContent = SingleLiveEvent<String>()
+    val sharePostContent = SingleLiveEvent<String?>()
     val navigateToPostContentScreenEvent = SingleLiveEvent<EditPostResult?>()
     val playVideo = SingleLiveEvent<String>()
     private val currentPost = MutableLiveData<Post?> (null)
 
-    fun onSaveButtonClicked(content: String) {
-        if (content.isBlank()) return
+    fun onSaveButtonClicked(postContent: EditPostResult) {
+        if (postContent.equals(null)) return
         val newPost = currentPost.value?.copy(
-            content = content
+            content = postContent.newContent,
+            video = postContent.newVideoUrl
         ) ?: Post(
             id = PostRepository.NEW_POST_ID,
             author = "I",
-            content = content,
+            content = postContent.newContent,
             published = "Today",
-            //video = "https://www.youtube.com/watch?v=uYmzLRXjcAE&list=PL0lO_mIqDDFW13-lP3IgK9lZoM1M-oPl4&index=18"
+            video = postContent.newVideoUrl
+            //video = "https://www.youtube.com/watch?v=SW_UCzFO7X0"
         )
         repository.save(newPost)
+        currentPost.value = null
     }
 
     fun onAddButtonClicked() {
