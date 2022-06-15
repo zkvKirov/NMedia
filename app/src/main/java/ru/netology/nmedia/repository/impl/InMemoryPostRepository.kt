@@ -1,10 +1,11 @@
-package ru.netology.nmedia.repository
+package ru.netology.nmedia.repository.impl
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import ru.netology.nmedia.Post
+import ru.netology.nmedia.repository.PostRepository
 
-class PostRepositoryInMemoryImpl : PostRepository {
+class InMemoryPostRepository : PostRepository {
 
     companion object {
         const val GENERATED_POST_AMOUNT = 10
