@@ -4,8 +4,8 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import ru.netology.nmedia.EditPostResult
 import ru.netology.nmedia.R
-import ru.netology.nmedia.activity.PostContentActivity.Companion.RESULT_KEY
 import ru.netology.nmedia.adapter.PostsAdapter
 import ru.netology.nmedia.databinding.ActivityMainBinding
 import ru.netology.nmedia.viewModel.PostViewModel
@@ -54,10 +54,11 @@ class MainActivity : AppCompatActivity() {
 
         val postContentActivityLauncher = registerForActivityResult(
             PostContentActivity.ResultContract
-        ) { postContent ->
-            postContent?: return@registerForActivityResult
-            viewModel.onSaveButtonClicked(postContent)
+        ) {
+            it?: return@registerForActivityResult
+            viewModel.onSaveButtonClicked(it)
         }
+
         viewModel.navigateToPostContentScreenEvent.observe(this) {
             postContentActivityLauncher.launch(it)
         }

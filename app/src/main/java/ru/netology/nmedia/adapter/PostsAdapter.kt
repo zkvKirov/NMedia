@@ -90,7 +90,7 @@ class PostViewHolder(
                 isChecked = post.likedByMe
             }
             share.text = post.share.toString()
-            groupVideo.isVisible = post.video != null
+            groupVideo.isVisible = post.video != null && post.video.isNotBlank()
         }
     }
 }

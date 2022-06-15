@@ -6,14 +6,37 @@
     android:layout_height="match_parent"
     tools:context=".activity.PostContentActivity">
 
-    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/edit"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="start|top"
-        android:inputType="textMultiLine"
-        android:background="@android:color/transparent"
-        />
+        android:layout_height="match_parent"
+        app:layout_constraintHeight_default="percent"
+        app:layout_constraintHeight_percent="0.9"
+        android:id="@+id/post_edit_window"
+        android:gravity="start|top" >
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edit_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/common_spacing"
+            app:layout_constraintTop_toTopOf="@id/post_edit_window"
+            android:inputType="textMultiLine"
+            android:background="@android:color/transparent"
+            android:hint="@string/text"
+            />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/edit_url"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            app:layout_constraintTop_toBottomOf="@id/edit_content"
+            android:layout_marginTop="@dimen/common_spacing"
+            android:inputType="text"
+            android:hint="@string/url"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/bottomAppBar"
