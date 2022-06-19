@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import ru.netology.nmedia.Post
 import ru.netology.nmedia.R
-import ru.netology.nmedia.databinding.PostCardActivityBinding
+import ru.netology.nmedia.databinding.PostCardBinding
 import ru.netology.nmedia.util.displayLikes
 
 class PostsAdapter(
@@ -18,7 +18,7 @@ class PostsAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = PostCardActivityBinding.inflate(inflater, parent, false)
+        val binding = PostCardBinding.inflate(inflater, parent, false)
         return PostViewHolder(binding, interactionListener)
     }
 
@@ -36,7 +36,7 @@ class PostsAdapter(
 }
 
 class PostViewHolder(
-    private val binding: PostCardActivityBinding,
+    private val binding: PostCardBinding,
     listener: PostInteractionListener
 ) : RecyclerView.ViewHolder(binding.root) {
 

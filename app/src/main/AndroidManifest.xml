@@ -11,7 +11,8 @@
         android:theme="@style/Theme.NMedia">
 
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".ui.AppActivity"
+            android:windowSoftInputMode="adjustResize"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,7 +22,7 @@
         </activity>
 
         <activity
-            android:name=".activity.IntentHandlerActivity"
+            android:name=".ui.IntentHandlerActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
@@ -30,11 +31,6 @@
                 <data android:mimeType="audio/video" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".activity.PostContentActivity"
-            android:windowSoftInputMode="adjustResize"
-            android:exported="false"/>
-
     </application>
 
     <queries>
