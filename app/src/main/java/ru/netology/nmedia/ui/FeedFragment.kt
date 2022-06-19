@@ -5,9 +5,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.commit
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import ru.netology.nmedia.EditPostResult
 import ru.netology.nmedia.R
 import ru.netology.nmedia.adapter.PostsAdapter
@@ -50,10 +50,8 @@ class FeedFragment : Fragment() {
         }
 
         viewModel.navigateToPostContentScreenEvent.observe(this) {
-            parentFragmentManager.commit {
-                replace(R.id.fragmentContainer, PostContentFragment(it))
-                addToBackStack(null)
-            }
+            val direction = FeedFragmentDirections.toPostContentFragment(it)
+            findNavController().navigate(direction)
         }
     }
 

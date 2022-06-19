@@ -6,20 +6,21 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
-import ru.netology.nmedia.EditPostResult
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import ru.netology.nmedia.databinding.PostContentFragmentBinding
 
-class PostContentFragment (
-    private val initialContent: EditPostResult?
-        ) : Fragment() {
+class PostContentFragment : Fragment() {
+
+    private val args by navArgs<PostContentFragmentArgs>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ) = PostContentFragmentBinding.inflate(layoutInflater, container, false).also { binding ->
-        binding.editContent.setText(initialContent?.newContent)
-        binding.editUrl.setText(initialContent?.newVideoUrl)
+        binding.editContent.setText(args.initialContent?.newContent)
+        binding.editUrl.setText(args.initialContent?.newVideoUrl)
         binding.editContent.requestFocus(0)
         binding.ok.setOnClickListener {
             onOkButtonClicked(binding)
@@ -34,7 +35,7 @@ class PostContentFragment (
             setFragmentResult(REQUEST_KEY, resultBundle)
             Toast.makeText(context, "Успех", Toast.LENGTH_SHORT).show()
         }
-        parentFragmentManager.popBackStack()
+        findNavController().popBackStack()
     }
 
     companion object {
