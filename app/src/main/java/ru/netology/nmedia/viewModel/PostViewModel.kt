@@ -1,18 +1,16 @@
 package ru.netology.nmedia.viewModel
 
-import android.app.AlertDialog
 import android.app.Application
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import ru.netology.nmedia.EditPostResult
-import ru.netology.nmedia.Post
+import ru.netology.nmedia.post.EditPostResult
+import ru.netology.nmedia.post.Post
 import ru.netology.nmedia.adapter.PostInteractionListener
 import ru.netology.nmedia.repository.PostRepository
 import ru.netology.nmedia.repository.impl.FilePostRepository
-import ru.netology.nmedia.repository.impl.InMemoryPostRepository
-import ru.netology.nmedia.repository.impl.SharedPrefsPostRepository
 import ru.netology.nmedia.util.SingleLiveEvent
+import kotlin.properties.Delegates
 
 class PostViewModel(
     application: Application
@@ -21,10 +19,12 @@ class PostViewModel(
     private val repository: PostRepository = FilePostRepository(application)
 
     val data = repository.getAll()
+    var postId by Delegates.notNull<Long>()
 
     val sharePostContent = SingleLiveEvent<String?>()
     val navigateToPostContentScreenEvent = SingleLiveEvent<EditPostResult?>()
     val playVideo = SingleLiveEvent<String>()
+    val navigateToOnePost = SingleLiveEvent<Post>()
     private val currentPost = MutableLiveData<Post?> (null)
 
     fun onSaveButtonClicked(postContent: EditPostResult) {
@@ -89,6 +89,12 @@ class PostViewModel(
             "URL is absent"
         }
         playVideo.value = url
+    }
+
+    override fun onPostClicked(post: Post) {
+        navigateToOnePost.value = post
+        currentPost.value = post
+        postId = post.id
     }
 
     // endregion PostInteractionListener

@@ -1,4 +1,5 @@
 package ru.netology.nmedia.ui
+
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -8,17 +9,15 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import ru.netology.nmedia.post.EditPostResult
 import ru.netology.nmedia.R
 import ru.netology.nmedia.adapter.PostsAdapter
-import ru.netology.nmedia.databinding.FeedFragmentBinding
-import ru.netology.nmedia.ui.PostContentFragment.Companion.NEW_CONTENT
-import ru.netology.nmedia.ui.PostContentFragment.Companion.NEW_VIDEO_URL
-import ru.netology.nmedia.viewModel.PostViewModel
+import ru.netology.nmedia.databinding.OnePostFragmentBinding
+import ru.netology.nmedia.post.EditPostResult
+import ru.netology.nmedia.viewModel.OnePostViewModel
 
-class FeedFragment : Fragment() {
+class OnePostFragment : Fragment() {
 
-    private val viewModel: PostViewModel by viewModels()
+    private val viewModel: OnePostViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,10 +41,10 @@ class FeedFragment : Fragment() {
 
         setFragmentResultListener(
             requestKey = PostContentFragment.REQUEST_KEY
-        ) { requestKey, bundle ->  
+        ) { requestKey, bundle ->
             if (requestKey != PostContentFragment.REQUEST_KEY) return@setFragmentResultListener
-            val newPostContent = bundle[NEW_CONTENT].toString()
-            val newPostVideoUrl = bundle[NEW_VIDEO_URL].toString()
+            val newPostContent = bundle[PostContentFragment.NEW_CONTENT].toString()
+            val newPostVideoUrl = bundle[PostContentFragment.NEW_VIDEO_URL].toString()
             viewModel.onSaveButtonClicked(EditPostResult(newPostContent, newPostVideoUrl))
         }
 
@@ -53,9 +52,8 @@ class FeedFragment : Fragment() {
             val direction = FeedFragmentDirections.toPostContentFragment(it)
             findNavController().navigate(direction)
         }
-
-        viewModel.navigateToOnePost.observe(this) {
-            val direction = FeedFragmentDirections.toOnePostFragment()
+        viewModel.navigateToFeedFragment.observe(this) {
+            val direction = OnePostFragmentDirections.toFeedFragment()
             findNavController().navigate(direction)
         }
     }
@@ -64,19 +62,11 @@ class FeedFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ) = FeedFragmentBinding.inflate(layoutInflater, container, false).also { binding ->
-        val adapter = PostsAdapter(viewModel)
-        binding.list.adapter = adapter
-        viewModel.data.observe(viewLifecycleOwner) { posts ->
-            val newPost = posts.size > adapter.itemCount
-            adapter.submitList(posts) {
-                if (newPost) {
-                    binding.list.smoothScrollToPosition(0)
-                }
-            }
-        }
-        binding.fab.setOnClickListener {
-            viewModel.onAddButtonClicked()
+    ) = OnePostFragmentBinding.inflate(layoutInflater, container, false).also { binding ->
+        //val adapter = PostsAdapter(viewModel) // надо создавать отдельный адаптер?
+        binding.onePost // как передать сюда один текущий пост?
+        viewModel.data.observe(viewLifecycleOwner) { post ->
+
         }
     }.root
 }

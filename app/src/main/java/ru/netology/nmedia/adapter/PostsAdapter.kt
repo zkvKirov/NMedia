@@ -7,7 +7,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import ru.netology.nmedia.Post
+import ru.netology.nmedia.post.Post
 import ru.netology.nmedia.R
 import ru.netology.nmedia.databinding.PostCardBinding
 import ru.netology.nmedia.util.displayLikes
@@ -65,10 +65,7 @@ class PostViewHolder(
         binding.menu.setOnClickListener {
             popupMenu.show()
         }
-        binding.videoContent.setOnClickListener {
-            listener.onPlayVideoClicked(post)
-        }
-        binding.playButton.setOnClickListener {
+        binding.groupVideo.setOnClickListener {
             listener.onPlayVideoClicked(post)
         }
         binding.like.setOnClickListener {
@@ -76,6 +73,9 @@ class PostViewHolder(
         }
         binding.share.setOnClickListener {
             listener.onShareClicked(post)
+        }
+        binding.groupPost.setOnClickListener {
+            listener.onPostClicked(post)
         }
     }
 

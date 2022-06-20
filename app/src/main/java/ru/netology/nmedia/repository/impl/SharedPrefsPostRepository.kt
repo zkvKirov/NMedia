@@ -7,7 +7,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import kotlinx.serialization.*
 import kotlinx.serialization.json.Json
-import ru.netology.nmedia.Post
+import ru.netology.nmedia.post.Post
 import ru.netology.nmedia.repository.PostRepository
 import kotlin.properties.Delegates
 
