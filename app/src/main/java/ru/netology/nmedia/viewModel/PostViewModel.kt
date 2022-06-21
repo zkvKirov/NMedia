@@ -47,9 +47,13 @@ class PostViewModel(
         currentPost.value = null
     }
 
-    fun onAddButtonClicked() {
-        navigateToPostContentScreenEvent.call()
+    fun onAddButtonClicked(postContent: EditPostResult?) {
+        navigateToPostContentScreenEvent.value = postContent
     }
+
+//    fun onAddButtonClicked() {
+//        navigateToPostContentScreenEvent.call()
+//    }
 
     // region PostInteractionListener
 
