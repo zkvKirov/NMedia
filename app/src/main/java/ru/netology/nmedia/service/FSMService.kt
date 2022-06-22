@@ -11,6 +11,7 @@ import androidx.core.app.NotificationManagerCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.google.gson.Gson
+import ru.netology.nmedia.Post
 import ru.netology.nmedia.R
 import kotlin.random.Random
 
@@ -36,13 +37,12 @@ class FSMService : FirebaseMessagingService() {
     override fun onMessageReceived(message: RemoteMessage) {
         val data = message.data
         val serializedAction = data[Action.KEY] ?: return
-        val action = Action.values().find { it.key == serializedAction } ?: return
 
-        when(action) {
+        when(Action.values().find { it.key == serializedAction }) {
             Action.Like -> handleLikeAction(data[CONTENT_KEY] ?: return)
+            Action.NewPost -> handleNewPostAction(data[CONTENT_KEY] ?: return)
+            else -> Log.d("onMessageReceived", gson.toJson(message))
         }
-
-        Log.d("onMessageReceived", gson.toJson(message))
     }
 
     override fun onNewToken(token: String) {
@@ -62,6 +62,26 @@ class FSMService : FirebaseMessagingService() {
                     likeContent.postAuthor
                 )
             )
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .build()
+
+        NotificationManagerCompat.from(this)
+            .notify(Random.nextInt(100_000), notification)
+    }
+
+    private fun handleNewPostAction(content: String) {
+        val postContent = gson.fromJson(content, Post::class.java)
+        val notification = NotificationCompat.Builder(this, CHANNEL_ID)
+            .setSmallIcon(R.drawable.ic_notification)
+            .setContentTitle(
+                getString(
+                    R.string.notification_new_post,
+                    postContent.author
+                )
+            )
+            .setContentText(postContent.content)
+            .setStyle(NotificationCompat.BigTextStyle()
+                .bigText(postContent.content))
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .build()
 
