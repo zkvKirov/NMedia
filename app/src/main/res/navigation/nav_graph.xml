@@ -22,7 +22,7 @@
         tools:layout="@layout/post_content_fragment" >
         <argument
             android:name="initialContent"
-            app:argType="ru.netology.nmedia.EditPostResult"
+            app:argType="ru.netology.nmedia.post.EditPostResult"
             app:nullable="true" />
     </fragment>
     <fragment

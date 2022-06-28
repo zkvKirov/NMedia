@@ -74,7 +74,16 @@ class PostViewHolder(
         binding.share.setOnClickListener {
             listener.onShareClicked(post)
         }
-        binding.groupPost.setOnClickListener {
+        binding.avatar.setOnClickListener {
+            listener.onPostClicked(post)
+        }
+        binding.authorName.setOnClickListener {
+            listener.onPostClicked(post)
+        }
+        binding.datePublished.setOnClickListener {
+            listener.onPostClicked(post)
+        }
+        binding.content.setOnClickListener {
             listener.onPostClicked(post)
         }
     }
