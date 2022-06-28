@@ -1,9 +1,11 @@
 package ru.netology.nmedia.viewModel
 
+import android.app.AlertDialog
 import android.app.Application
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import ru.netology.nmedia.R
 import ru.netology.nmedia.post.EditPostResult
 import ru.netology.nmedia.post.Post
 import ru.netology.nmedia.adapter.PostInteractionListener
@@ -24,7 +26,8 @@ class PostViewModel(
     val sharePostContent = SingleLiveEvent<String?>()
     val navigateToPostContentScreenEvent = SingleLiveEvent<EditPostResult?>()
     val playVideo = SingleLiveEvent<String>()
-    val navigateToOnePost = SingleLiveEvent<Post>()
+    val navigateToOnePost = SingleLiveEvent<Long>()
+    val navigateToFeedFragment = SingleLiveEvent<Unit>()
     private val currentPost = MutableLiveData<Post?> (null)
 
     fun onSaveButtonClicked(postContent: EditPostResult) {
@@ -92,7 +95,7 @@ class PostViewModel(
     }
 
     override fun onPostClicked(post: Post) {
-        navigateToOnePost.value = post
+        navigateToOnePost.value = post.id
         currentPost.value = post
         postId = post.id
     }

@@ -32,5 +32,11 @@
         <action
             android:id="@+id/toFeedFragment"
             app:destination="@id/feedFragment" />
+        <argument
+            android:name="postId"
+            app:argType="long" />
+        <action
+            android:id="@+id/toPostContentFragment"
+            app:destination="@id/postContentFragment" />
     </fragment>
 </navigation>

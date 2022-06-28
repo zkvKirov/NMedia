@@ -65,7 +65,10 @@ class PostViewHolder(
         binding.menu.setOnClickListener {
             popupMenu.show()
         }
-        binding.groupVideo.setOnClickListener {
+        binding.videoContent.setOnClickListener {
+            listener.onPlayVideoClicked(post)
+        }
+        binding.playButton.setOnClickListener {
             listener.onPlayVideoClicked(post)
         }
         binding.like.setOnClickListener {
@@ -74,16 +77,7 @@ class PostViewHolder(
         binding.share.setOnClickListener {
             listener.onShareClicked(post)
         }
-        binding.avatar.setOnClickListener {
-            listener.onPostClicked(post)
-        }
-        binding.authorName.setOnClickListener {
-            listener.onPostClicked(post)
-        }
-        binding.datePublished.setOnClickListener {
-            listener.onPostClicked(post)
-        }
-        binding.content.setOnClickListener {
+        binding.groupPost.setOnClickListener {
             listener.onPostClicked(post)
         }
     }

@@ -73,12 +73,6 @@
         app:layout_constraintTop_toBottomOf="@id/barrier"
         tools:text="просто какой-то текст чтобы заполнить это поле" />
 
-    <androidx.constraintlayout.widget.Group
-        android:id="@+id/group_post"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:constraint_referenced_ids="avatar, authorName, datePublished, content, barrier" />
-
     <View
         android:id="@+id/video_content"
         android:layout_width="match_parent"
@@ -107,6 +101,15 @@
         android:visibility="gone"
         app:constraint_referenced_ids="video_content, play_button"
         tools:visibility="visible" />
+
+    <View
+        android:id="@+id/group_post"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/video_content"
+        app:layout_constraintEnd_toStartOf="@id/menu"
+        app:layout_constraintStart_toStartOf="@id/avatar"
+        app:layout_constraintTop_toTopOf="@id/authorName" />
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/footer"

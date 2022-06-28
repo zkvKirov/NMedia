@@ -9,15 +9,19 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import ru.netology.nmedia.R
+import ru.netology.nmedia.adapter.PostViewHolder
 import ru.netology.nmedia.adapter.PostsAdapter
 import ru.netology.nmedia.databinding.OnePostFragmentBinding
 import ru.netology.nmedia.post.EditPostResult
-import ru.netology.nmedia.viewModel.OnePostViewModel
+import ru.netology.nmedia.viewModel.PostViewModel
 
 class OnePostFragment : Fragment() {
 
-    private val viewModel: OnePostViewModel by viewModels()
+    private val viewModel: PostViewModel by viewModels()
+
+    private val args by navArgs<OnePostFragmentArgs>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,7 +53,7 @@ class OnePostFragment : Fragment() {
         }
 
         viewModel.navigateToPostContentScreenEvent.observe(this) {
-            val direction = FeedFragmentDirections.toPostContentFragment(it)
+            val direction = OnePostFragmentDirections.toPostContentFragment(it)
             findNavController().navigate(direction)
         }
         viewModel.navigateToFeedFragment.observe(this) {
@@ -63,10 +67,17 @@ class OnePostFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ) = OnePostFragmentBinding.inflate(layoutInflater, container, false).also { binding ->
-        //val adapter = PostsAdapter(viewModel) // надо создавать отдельный адаптер?
-        binding.onePost // как передать сюда один текущий пост?
-        viewModel.data.observe(viewLifecycleOwner) { post ->
-
+        val viewHolder = PostViewHolder(binding.onePost, viewModel)
+        viewModel.data.observe(viewLifecycleOwner) { posts ->
+            val post = posts.find { it.id == args.postId } ?: run {
+                findNavController().navigateUp()
+                return@observe
+            }
+            viewHolder.bind(post)
+        }
+        val adapter = PostsAdapter(viewModel)
+        viewModel.data.observe(viewLifecycleOwner) { posts->
+            adapter.submitList(posts)
         }
     }.root
 }

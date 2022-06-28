@@ -55,7 +55,7 @@ class FeedFragment : Fragment() {
         }
 
         viewModel.navigateToOnePost.observe(this) {
-            val direction = FeedFragmentDirections.toOnePostFragment()
+            val direction = FeedFragmentDirections.toOnePostFragment(it)
             findNavController().navigate(direction)
         }
     }
