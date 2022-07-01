@@ -1,11 +1,9 @@
 package ru.netology.nmedia.viewModel
 
-import android.app.AlertDialog
 import android.app.Application
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import ru.netology.nmedia.R
 import ru.netology.nmedia.post.EditPostResult
 import ru.netology.nmedia.post.Post
 import ru.netology.nmedia.adapter.PostInteractionListener
@@ -64,23 +62,6 @@ class PostViewModel(
         repository.remove(post.id)
         Toast.makeText(getApplication(), "Post was deleted", Toast.LENGTH_SHORT).show()
     }
-
-//    override fun onRemoveClicked(post: Post) {
-//        val builder = AlertDialog.Builder(getApplication())
-//        builder.setTitle("Delete post")
-//            .setIcon(R.drawable.ic_clear_24)
-//            .setMessage("Are you really want delete post?")
-//            .setPositiveButton("OK") { _, _ ->
-//                repository.remove(post.id)
-//                Toast.makeText(getApplication(), "Post was deleted", Toast.LENGTH_SHORT).show()
-//            }
-//            .setNegativeButton("Cancel") {dialog, _ ->
-//                dialog.cancel()
-//            }
-//        val alertDialog: AlertDialog = builder.create()
-//        alertDialog.setCancelable(false)
-//        alertDialog.show()
-//    }
 
     override fun onEditClicked(post: Post) {
         navigateToPostContentScreenEvent.value = EditPostResult(post.content, post.video)

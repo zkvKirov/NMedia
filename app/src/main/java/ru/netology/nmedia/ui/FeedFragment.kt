@@ -18,7 +18,9 @@ import ru.netology.nmedia.viewModel.PostViewModel
 
 class FeedFragment : Fragment() {
 
-    private val viewModel: PostViewModel by viewModels()
+    private val viewModel: PostViewModel by viewModels(
+        ownerProducer = ::requireParentFragment
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,15 +40,6 @@ class FeedFragment : Fragment() {
         viewModel.playVideo.observe(this) { videoUrl ->
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(videoUrl))
             startActivity(intent)
-        }
-
-        setFragmentResultListener(
-            requestKey = PostContentFragment.REQUEST_KEY
-        ) { requestKey, bundle ->  
-            if (requestKey != PostContentFragment.REQUEST_KEY) return@setFragmentResultListener
-            val newPostContent = bundle[NEW_CONTENT].toString()
-            val newPostVideoUrl = bundle[NEW_VIDEO_URL].toString()
-            viewModel.onSaveButtonClicked(EditPostResult(newPostContent, newPostVideoUrl))
         }
 
         viewModel.navigateToPostContentScreenEvent.observe(this) {
@@ -79,4 +72,18 @@ class FeedFragment : Fragment() {
             viewModel.onAddButtonClicked()
         }
     }.root
+
+    override fun onResume() {
+        super.onResume()
+
+        setFragmentResultListener(
+            requestKey = PostContentFragment.REQUEST_KEY
+        ) { requestKey, bundle ->
+            if (requestKey != PostContentFragment.REQUEST_KEY) return@setFragmentResultListener
+            val newPostContent = bundle[NEW_CONTENT].toString()
+            val newPostVideoUrl = bundle[NEW_VIDEO_URL].toString()
+            viewModel.onSaveButtonClicked(EditPostResult(newPostContent, newPostVideoUrl))
+        }
+    }
+
 }

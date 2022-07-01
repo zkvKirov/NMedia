@@ -1,8 +1,10 @@
 package ru.netology.nmedia.adapter
 
+import android.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -48,7 +50,20 @@ class PostViewHolder(
             setOnMenuItemClickListener { menuItem ->
                 when (menuItem.itemId) {
                     R.id.remove -> {
-                        listener.onRemoveClicked(post)
+                        val builder = AlertDialog.Builder(itemView.context)
+                        builder.setTitle("Delete post")
+                            .setIcon(R.drawable.ic_clear_24)
+                            .setMessage("Are you really want delete post?")
+                            .setPositiveButton("OK") { _, _ ->
+                                listener.onRemoveClicked(post)
+                                Toast.makeText(itemView.context, "Post was deleted", Toast.LENGTH_SHORT).show()
+                            }
+                            .setNegativeButton("Cancel") {dialog, _ ->
+                                dialog.cancel()
+                            }
+                        val alertDialog: AlertDialog = builder.create()
+                        alertDialog.setCancelable(false)
+                        alertDialog.show()
                         true
                     }
                     R.id.edit -> {
