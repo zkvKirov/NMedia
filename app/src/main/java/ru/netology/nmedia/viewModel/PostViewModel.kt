@@ -77,7 +77,6 @@ class PostViewModel(
 
     override fun onPostClicked(post: Post) {
         navigateToOnePost.value = post.id
-        currentPost.value = post
         postId = post.id
     }
 
