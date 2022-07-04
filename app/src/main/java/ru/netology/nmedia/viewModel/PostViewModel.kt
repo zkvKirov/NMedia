@@ -7,8 +7,9 @@ import androidx.lifecycle.MutableLiveData
 import ru.netology.nmedia.post.EditPostResult
 import ru.netology.nmedia.post.Post
 import ru.netology.nmedia.adapter.PostInteractionListener
+import ru.netology.nmedia.db.AppDb
 import ru.netology.nmedia.repository.PostRepository
-import ru.netology.nmedia.repository.impl.FilePostRepository
+import ru.netology.nmedia.repository.impl.PostRepositoryImpl
 import ru.netology.nmedia.util.SingleLiveEvent
 import kotlin.properties.Delegates
 
@@ -16,7 +17,11 @@ class PostViewModel(
     application: Application
 ) : AndroidViewModel(application), PostInteractionListener {
 
-    private val repository: PostRepository = FilePostRepository(application)
+    private val repository: PostRepository = PostRepositoryImpl(
+            dao = AppDb.getInstance(
+                context = application
+            ).postDao
+        )
 
     val data = repository.getAll()
     var postId by Delegates.notNull<Long>()
@@ -45,8 +50,8 @@ class PostViewModel(
         currentPost.value = null
     }
 
-    fun onAddButtonClicked() {
-        navigateToPostContentScreenEvent.call()
+    fun onAddButtonClicked(postContent: EditPostResult?) {
+        navigateToPostContentScreenEvent.value = postContent
     }
 
     // region PostInteractionListener

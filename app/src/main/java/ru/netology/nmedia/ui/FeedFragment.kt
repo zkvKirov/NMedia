@@ -22,6 +22,8 @@ class FeedFragment : Fragment() {
         ownerProducer = ::requireParentFragment
     )
 
+    private var draft: EditPostResult? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -40,6 +42,15 @@ class FeedFragment : Fragment() {
         viewModel.playVideo.observe(this) { videoUrl ->
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(videoUrl))
             startActivity(intent)
+        }
+
+        setFragmentResultListener(
+            requestKey = PostContentFragment.DRAFT_KEY
+        ) { requestKey, bundle ->
+            if (requestKey != PostContentFragment.DRAFT_KEY) return@setFragmentResultListener
+            val newPostContent = bundle[NEW_CONTENT].toString()
+            val newPostVideoUrl = bundle[NEW_VIDEO_URL].toString()
+            draft = EditPostResult(newPostContent, newPostVideoUrl)
         }
 
         viewModel.navigateToPostContentScreenEvent.observe(this) {
@@ -69,7 +80,7 @@ class FeedFragment : Fragment() {
             }
         }
         binding.fab.setOnClickListener {
-            viewModel.onAddButtonClicked()
+            viewModel.onAddButtonClicked(draft)
         }
     }.root
 
@@ -83,6 +94,7 @@ class FeedFragment : Fragment() {
             val newPostContent = bundle[NEW_CONTENT].toString()
             val newPostVideoUrl = bundle[NEW_VIDEO_URL].toString()
             viewModel.onSaveButtonClicked(EditPostResult(newPostContent, newPostVideoUrl))
+            draft = null
         }
     }
 
