@@ -1,4 +1,4 @@
-package ru.netology.nmedia
+package ru.netology.nmedia.post
 
 import com.google.gson.annotations.SerializedName
 import kotlinx.serialization.Serializable

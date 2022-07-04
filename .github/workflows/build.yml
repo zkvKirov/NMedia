@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [ master, Notifications_&_Pushes ]
+    branches: [ master, main ]
   pull_request:
-    branches: [ master, Notifications_&_Pushes ]
+    branches: [ master, main ]
 
 jobs:
   build:
@@ -12,13 +12,13 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2.4.2      
+        uses: actions/checkout@v2.4.2
 
       - name: Decode google-services.json
         env:
           FIREBASE_SECRET: ${{ secrets.FIREBASE_SECRET }}
         run: echo $FIREBASE_SECRET > ./app/google-services.json
-      
+
       - name: Build
         run: |
           chmod +x ./gradlew

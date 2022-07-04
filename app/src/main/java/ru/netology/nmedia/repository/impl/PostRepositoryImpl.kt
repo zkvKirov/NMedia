@@ -1,10 +1,10 @@
 package ru.netology.nmedia.repository.impl
 
 import androidx.lifecycle.Transformations
-import ru.netology.nmedia.Post
 import ru.netology.nmedia.db.PostDao
 import ru.netology.nmedia.db.toEntity
 import ru.netology.nmedia.db.toModel
+import ru.netology.nmedia.post.Post
 import ru.netology.nmedia.repository.PostRepository
 
 class PostRepositoryImpl(

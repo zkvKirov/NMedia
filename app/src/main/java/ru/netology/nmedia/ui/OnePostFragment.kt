@@ -1,4 +1,5 @@
 package ru.netology.nmedia.ui
+
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -8,21 +9,21 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import ru.netology.nmedia.post.EditPostResult
+import androidx.navigation.fragment.navArgs
 import ru.netology.nmedia.R
+import ru.netology.nmedia.adapter.PostViewHolder
 import ru.netology.nmedia.adapter.PostsAdapter
-import ru.netology.nmedia.databinding.FeedFragmentBinding
-import ru.netology.nmedia.ui.PostContentFragment.Companion.NEW_CONTENT
-import ru.netology.nmedia.ui.PostContentFragment.Companion.NEW_VIDEO_URL
+import ru.netology.nmedia.databinding.OnePostFragmentBinding
+import ru.netology.nmedia.post.EditPostResult
 import ru.netology.nmedia.viewModel.PostViewModel
 
-class FeedFragment : Fragment() {
+class OnePostFragment : Fragment() {
 
     private val viewModel: PostViewModel by viewModels(
         ownerProducer = ::requireParentFragment
     )
 
-    private var draft: EditPostResult? = null
+    private val args by navArgs<OnePostFragmentArgs>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,22 +45,12 @@ class FeedFragment : Fragment() {
             startActivity(intent)
         }
 
-        setFragmentResultListener(
-            requestKey = PostContentFragment.DRAFT_KEY
-        ) { requestKey, bundle ->
-            if (requestKey != PostContentFragment.DRAFT_KEY) return@setFragmentResultListener
-            val newPostContent = bundle[NEW_CONTENT].toString()
-            val newPostVideoUrl = bundle[NEW_VIDEO_URL].toString()
-            draft = EditPostResult(newPostContent, newPostVideoUrl)
-        }
-
         viewModel.navigateToPostContentScreenEvent.observe(this) {
-            val direction = FeedFragmentDirections.toPostContentFragment(it)
+            val direction = OnePostFragmentDirections.toPostContentFragment(it)
             findNavController().navigate(direction)
         }
-
-        viewModel.navigateToOnePost.observe(this) {
-            val direction = FeedFragmentDirections.toOnePostFragment(it)
+        viewModel.navigateToFeedFragment.observe(this) {
+            val direction = OnePostFragmentDirections.toFeedFragment()
             findNavController().navigate(direction)
         }
     }
@@ -68,19 +59,18 @@ class FeedFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ) = FeedFragmentBinding.inflate(layoutInflater, container, false).also { binding ->
-        val adapter = PostsAdapter(viewModel)
-        binding.list.adapter = adapter
+    ) = OnePostFragmentBinding.inflate(layoutInflater, container, false).also { binding ->
+        val viewHolder = PostViewHolder(binding.onePost, viewModel)
         viewModel.data.observe(viewLifecycleOwner) { posts ->
-            val newPost = posts.size > adapter.itemCount
-            adapter.submitList(posts) {
-                if (newPost) {
-                    binding.list.smoothScrollToPosition(0)
-                }
+            val post = posts.find { it.id == args.postId } ?: run {
+                findNavController().navigateUp()
+                return@observe
             }
+            viewHolder.bind(post)
         }
-        binding.fab.setOnClickListener {
-            viewModel.onAddButtonClicked(draft)
+        val adapter = PostsAdapter(viewModel)
+        viewModel.data.observe(viewLifecycleOwner) { posts->
+            adapter.submitList(posts)
         }
     }.root
 
@@ -91,11 +81,9 @@ class FeedFragment : Fragment() {
             requestKey = PostContentFragment.REQUEST_KEY
         ) { requestKey, bundle ->
             if (requestKey != PostContentFragment.REQUEST_KEY) return@setFragmentResultListener
-            val newPostContent = bundle[NEW_CONTENT].toString()
-            val newPostVideoUrl = bundle[NEW_VIDEO_URL].toString()
+            val newPostContent = bundle[PostContentFragment.NEW_CONTENT].toString()
+            val newPostVideoUrl = bundle[PostContentFragment.NEW_VIDEO_URL].toString()
             viewModel.onSaveButtonClicked(EditPostResult(newPostContent, newPostVideoUrl))
-            draft = null
         }
     }
-
 }
